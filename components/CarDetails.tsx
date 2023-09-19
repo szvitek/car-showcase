@@ -1,6 +1,7 @@
 "use client";
 
 import { CarProps } from "@/types";
+import { generateCarImageUrl } from "@/utils";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { Fragment } from "react";
@@ -12,6 +13,7 @@ interface CarDetailsProps {
 }
 
 const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
+  const angles = ["29", "33", "13"];
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -57,7 +59,7 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                   <div className="flex-1 flex flex-col gap-3">
                     <div className="relative w-full h-40 bg-pattern bg-cover bg-center rounded-lg">
                       <Image
-                        src="/hero.png"
+                        src={generateCarImageUrl(car)}
                         alt="car model"
                         fill
                         priority
@@ -66,33 +68,20 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                     </div>
 
                     <div className="flex gap-3">
-                      <div className="flex-1 relative w-full h-24 bg-primary-blue-100 rounded-lg">
-                        <Image
-                          src="/hero.png"
-                          alt="car model"
-                          fill
-                          priority
-                          className="object-contain"
-                        />
-                      </div>
-                      <div className="flex-1 relative w-full h-24 bg-primary-blue-100 rounded-lg">
-                        <Image
-                          src="/hero.png"
-                          alt="car model"
-                          fill
-                          priority
-                          className="object-contain"
-                        />
-                      </div>
-                      <div className="flex-1 relative w-full h-24 bg-primary-blue-100 rounded-lg">
-                        <Image
-                          src="/hero.png"
-                          alt="car model"
-                          fill
-                          priority
-                          className="object-contain"
-                        />
-                      </div>
+                      {angles.map((angle) => (
+                        <div
+                          className="flex-1 relative w-full h-24 bg-primary-blue-100 rounded-lg"
+                          key={angle}
+                        >
+                          <Image
+                            src={generateCarImageUrl(car, angle)}
+                            alt="car model"
+                            fill
+                            priority
+                            className="object-contain"
+                          />
+                        </div>
+                      ))}
                     </div>
                   </div>
 
